@@ -1,9 +1,12 @@
-﻿#include "chess_platform.h"
+
+#include "chess_platform.h"
 #include<iostream>
 using namespace std;
 chess_platform::chess_platform(QWidget *parent):QWidget (parent)
 {
     this->createStones();
+    this->rule;
+
     cout<<"初始化棋盘"<<endl;
 
 
@@ -48,18 +51,15 @@ void chess_platform::createStones(){
 
     for(short i=1;i<11;i++){
         for(short j=1;j<10;j++){
+
             if(chessBoard[i][j]!=0){
-                _s[f].setid(f);
-                _s[f].settype(Init[f]);
-                _s[f].setX(j);
-                _s[f].setY(i);
+
+                _s[f]=Stone(f+1,Init[f],j,i);
+
                 ++f;
-
-
             }
-
-
         }
+
     }
 
 }
@@ -136,131 +136,94 @@ void chess_platform:: CsetY(Stone *p,int y){
 void chess_platform::mouseReleaseEvent(QMouseEvent *ev){
 
 
-    QPoint press(0,0);
-    QPoint p=ev->pos();
+      QPoint press(0,0);
+     QPoint p=ev->pos();
     this->CsetX(&press,int(p.x()));
     this->CsetY(&press,int(p.y()));
+    cout<<press.x()<<" "<<press.y()<<endl;
 //选择棋子
-   back:
-    if(acstone==nullptr&&ev->button()==Qt::LeftButton){
+    //判断点击点是否在棋盘外面
 
-        for(short i=0;i<32;i++){
-             if(_s[i].getLive()==false)continue;
-            if(_s[i].isInside(press)){
+     if(press.x()>=1&&press.x()<10&&press.y()>=1&&press.y()<=10){
+         //当前点击点的id
+          int id=chessBoard[press.y()][press.x()]-1;
 
-                 cout <<"gettype: "<<IsRed(_s[i].gettype())<<"  who:"<<who<<endl;
+//          for(int i=0;i<12;i++){
+//              cout<<endl;
+//              for(int j=0;j<11;j++){
+//                  cout<<chessBoard[i][j]<<" ";
+//              }}
+           //选子
+           back:
+          if(acstone==nullptr&&ev->button()==Qt::LeftButton){
+              //选子 当前有棋子
+              if(id!=-1){
 
-                if(IsRed(_s[i].gettype())&&who==1){
-                        cout <<"selectchess2: "<<who<<endl;
-                     _s[i].setSelect(true);
-                     acstone=&_s[i];
-                       who=2;
-                      break;
+                  if((IsRed(_s[id].gettype())&&who==1)||(IsBlack(_s[id].gettype())&&who==2)){
+
+                               acstone=&_s[id];
+                                acstone->setSelect(true);
+                                 who=(who==2?1:2);
+
+
+                  }
+
+
+              }
+              else{
+             //选子 当前无棋子
+                  return;
+              }
+
+
+
+          }
+        //有活动棋子，开始落子
+          else if (acstone!=nullptr){
+              acstone->setSelect(false);
+               Stone* dd=nullptr;
+               if(id!=-1){
+                   //落子 当前有棋子
+                   dd=&_s[id];
+                if(IsRed(dd->gettype())==IsRed(acstone->gettype())){
+                   //落子 同子
+                    //系统优化自动跳过这句话，无语，因为后面有  acstone=nullptr;
+                  // acstone->setSelect(false);
+
+
+                   acstone=nullptr;
+
+                   who=1==who?2:1;
+                   goto back;
                 }
-                else if(IsBlack(_s[i].gettype())&&who==2){
-                            cout <<"selectchess2: "<<who<<endl;
-                            _s[i].setSelect(true);
-                            acstone=&_s[i];
-                              who=1;
-                             //cout <<"acss"<<acstone->gettype()<<endl;
-                             break;
+               }
 
-                       }
+              if( !rule.choseRule(acstone,&press,chessBoard))return;
+                //合法
+               chessBoard[acstone->getY()][acstone->getX()]=0;
+               chessBoard[press.y()][press.x()]=acstone->getid();
+               //cout<< chessBoard[press.y()][press.x()]<<endl;
+               acstone->setX(press.x());
+               acstone->setY(press.y());
 
-            }
+               if(id!=-1){
+               dd->setLive(false);
+               dd->setX(-1);
+               dd->setY(-1);
 
-
-        }
-    }
-
-
-    else if (acstone!=nullptr){
-        //判断位置是否合法
-
-        if(!rule.choseRule(acstone,&press)){
-                return;
-    }
-
-
-//开始落子
-
-        cout <<"downchess: "<<who<<endl;
-        if(press.x()>=1&&press.x()<10&&press.y()>=1&&press.y()<=10){
-            Stone* dd=nullptr;
-            for(short i=0;i<32;i++){
-                //if(_s[i].getLive()==false)continue;
-                if(_s[i].isInside(press)){
-
-
-                         dd=&_s[i];
-                }
-            }
-            //不为空白
-
-            if(dd){
-                 chessBoard[acstone->getX()][acstone->getY()]=0;
-               // cout <<"dd"<<dd->gettype()<<endl;
-                //同类型
-                if(IsRed(acstone->gettype())==IsRed(dd->gettype())){
-                        acstone->setSelect(false);
-                        acstone=nullptr;
-                        dd=nullptr;
-                        who=1==who?2:1;
-                             goto back;
-
-                }else {
-
-                    dd->setLive(false);
-                    dd->setX(-1);
-                    dd->setY(-1);
-                    dd=nullptr;
-                    acstone->setX(press.x());
-                    acstone->setY(press.y());
-                    chessBoard[acstone->getX()][acstone->getY()]=acstone->gettype();
 
                 }
-            }
-            else{
-                acstone->setX(press.x());
-                acstone->setY(press.y());
-               chessBoard[acstone->getX()][acstone->getY()]=acstone->gettype();
-            }
+               acstone=nullptr;
+              dd=nullptr;
+     }
+          this->update();
 
-       // rule.choseRule(who,press,acstone);
-        }else{
 
-            acstone->setSelect(false);
-            acstone=nullptr;
-            who=1==who?2:1;
-             goto back;
-        }
-
-                acstone->setSelect(false);
-                acstone=nullptr;
-
-    }
-
-this->update();
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
