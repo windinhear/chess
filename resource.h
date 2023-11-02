@@ -35,34 +35,8 @@
 #define IsBlack(x) (x>=B_CAR&&x<=B_PAWN)
 #define IsRed(x) (x>=R_PAWN&&x<=R_KING)
 #define IsSameteam(x,y) (IsBlack(x)&&IsBlack(Y)||IsRed(x)&&IsRed(y))
-static int chessBoard[12][11] = {
-    {0,0, 0, 0, 0, 0, 0, 0, 0, 0,0},
-    {0,1, 2, 3, 4, 5, 4, 3, 2, 1,0},
-    {0,0, 0, 0, 0, 0, 0, 0, 0, 0,0},
-    {0,0, 6, 0, 0, 0, 0, 0, 6, 0,0},
-    {0,7, 0, 7, 0, 7, 0, 7, 0, 7,0},
-    {0,0, 0, 0, 0, 0, 0, 0, 0, 0,0},
-    {0,0, 0, 0, 0, 0, 0, 0, 0, 0,0},
-    {0,8, 0, 8, 0, 8, 0, 8, 0, 8,0},
-    {0,0, 9, 0, 0, 0, 0, 0, 9, 0,0},
-    {0,0, 0, 0, 0, 0, 0, 0, 0, 0,0},
-    {0,10, 11, 12, 13, 14, 13, 12, 11, 10,0},
-    {0,0, 0, 0, 0, 0, 0, 0, 0, 0,0}
-};
+
 const short Init[]={1,2,3,4,5,4,3,2,1,6,6,7,7,7,7,7,8,8,8,8,8,9,9,10,11,12,13,14,13,12,11,10};
-struct _chessposition{
-    short x;
-    short y;
-};
-struct _chessmove
-{
-    short chessID;
-    _chessposition From;
-    _chessposition To;
-    int Score;
-};
-
-
 
 
 

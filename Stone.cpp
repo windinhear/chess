@@ -1,7 +1,7 @@
 #include "Stone.h"
 #include<iostream>
 using namespace std;
-Stone::Stone()
+Stone::Stone(int id,int type,int x,int y):_id(id),_type(type),_x(x),_y(y)
 {
 
 }
