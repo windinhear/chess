@@ -1,3 +1,4 @@
+
 #ifndef CHESEDLOG_H
 #define CHESEDLOG_H
 #include <QVBoxLayout>
@@ -19,3 +20,4 @@ public:
 };
 
 #endif // CHESEDLOG_H
+

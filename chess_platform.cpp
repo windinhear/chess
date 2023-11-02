@@ -1,4 +1,5 @@
-﻿#include "chess_platform.h"
+
+#include "chess_platform.h"
 #include<iostream>
 using namespace std;
 chess_platform::chess_platform(QWidget *parent):QWidget (parent)
@@ -223,84 +224,6 @@ void chess_platform::mouseReleaseEvent(QMouseEvent *ev){
 
 
 }
-
-
-
-//        if(press.x()>=1&&press.x()<10&&press.y()>=1&&press.y()<=10){
-//            Stone* dd=nullptr;
-//            for(short i=0;i<32;i++){
-//                //if(_s[i].getLive()==false)continue;
-//                if(_s[i].isInside(press)){
-
-
-//                         dd=&_s[i];
-//                         break;
-//                }
-//            }
-//            //不为空白
-
-//            if(dd){
-//                 chessBoard[acstone->getX()][acstone->getY()]=0;
-//               // cout <<"dd"<<dd->gettype()<<endl;
-//                //同类型
-//                if(IsRed(acstone->gettype())==IsRed(dd->gettype())){
-//                        acstone->setSelect(false);
-//                        acstone=nullptr;
-//                        dd=nullptr;
-//                        who=1==who?2:1;
-
-//                }else {
-
-//                    dd->setLive(false);
-//                    dd->setX(-1);
-//                    dd->setY(-1);
-//                    dd=nullptr;
-//                    acstone->setX(press.x());
-//                    acstone->setY(press.y());
-//                    chessBoard[acstone->getX()][acstone->getY()]=acstone->gettype();
-
-//                }
-//            }
-//            else{
-//                acstone->setX(press.x());
-//                acstone->setY(press.y());
-//                chessBoard[acstone->getX()][acstone->getY()]=acstone->gettype();
-//            }
-
-//       // rule.choseRule(who,press,acstone);
-//        }else{
-
-//            acstone->setSelect(false);
-//            acstone=nullptr;
-//            who=1==who?2:1;
-
-//        }
-
-//                acstone->setSelect(false);
-//                acstone=nullptr;
-
-//    }
-
-
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

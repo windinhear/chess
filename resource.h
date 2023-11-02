@@ -1,3 +1,4 @@
+
 #ifndef RESOURCE_H
 #define RESOURCE_H
 
@@ -37,27 +38,6 @@
 #define IsSameteam(x,y) (IsBlack(x)&&IsBlack(Y)||IsRed(x)&&IsRed(y))
 
 const short Init[]={1,2,3,4,5,4,3,2,1,6,6,7,7,7,7,7,8,8,8,8,8,9,9,10,11,12,13,14,13,12,11,10};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,3 +1,4 @@
+
 #ifndef STONE_H
 #define STONE_H
 #include"resource.h"

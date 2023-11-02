@@ -1,3 +1,4 @@
+
 #include "chessrule.h"
 
 chessRule::chessRule()
@@ -212,6 +213,23 @@ bool chessRule::B_pawnRule(QPoint* f,QPoint* s){
     if((dx==-1&&dy==0)||(dx==0&&dy==-1)||(dx==1&&dy==0)) return true;
     return false;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

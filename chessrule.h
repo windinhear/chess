@@ -1,3 +1,4 @@
+
 #ifndef CHESSRULE_H
 #define CHESSRULE_H
 
@@ -31,4 +32,3 @@ public:
  }
 };
 
-#endif // CHESSRULE_H

@@ -1,3 +1,4 @@
+
 #ifndef CHESS_PLATFORM_H
 #define CHESS_PLATFORM_H
 
@@ -53,3 +54,4 @@ public slots:
 };
 
 #endif // BOARD_H
+

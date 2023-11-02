@@ -1,3 +1,4 @@
+
 #include "Stone.h"
 #include<iostream>
 using namespace std;
@@ -98,3 +99,4 @@ void Stone::setid(int id){
 }
 int Stone:: gettype(){return  _type;}
 void Stone::settype(int type){this->_type=type;}
+
