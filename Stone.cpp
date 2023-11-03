@@ -1,7 +1,8 @@
+
 #include "Stone.h"
 #include<iostream>
 using namespace std;
-Stone::Stone()
+Stone::Stone(int id,int type,int x,int y):_id(id),_type(type),_x(x),_y(y)
 {
 
 }
@@ -9,6 +10,15 @@ Stone::Stone()
 Stone::~Stone(){
 
 }
+Stone::Stone(const Stone &sto) {
+    _id = sto._id;
+    _type = sto._type;
+    _x = sto._x;
+    _y = sto._y;
+    _select = sto._select;
+    _islive = sto._islive;
+}
+
 
 //画自己的方法
 void Stone::drawpoint(int type,QPoint p,QPainter &painter){
@@ -98,3 +108,4 @@ void Stone::setid(int id){
 }
 int Stone:: gettype(){return  _type;}
 void Stone::settype(int type){this->_type=type;}
+

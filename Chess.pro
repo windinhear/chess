@@ -1,3 +1,4 @@
+
 SOURCES += \
     Stone.cpp \
     chesedlog.cpp \
@@ -15,3 +16,4 @@ HEADERS += \
     chess_platform.h \
     chessrule.h \
     resource.h
+

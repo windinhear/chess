@@ -1,3 +1,4 @@
+
 #ifndef STONE_H
 #define STONE_H
 #include"resource.h"
@@ -11,8 +12,10 @@
 class Stone
 {
 public:
-    Stone();
+    Stone(){}
+    Stone(int id,int type,int x,int y);
     ~Stone();
+    Stone(const Stone  &sto);
     int getid();
     void setid(int id);
     int gettype();
@@ -32,12 +35,14 @@ public:
  bool isInside(QPoint p);
     void setSelect(bool m);
    bool getSelect();
+   int _id;
+
+   //类型
+   int _type;
    int _x;
    int _y;
-    int _id;
-    bool _select=false;
-    //类型
-    int _type;
+
+       bool _select=false;
     bool _islive=true;
 };
 
