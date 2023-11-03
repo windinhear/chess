@@ -8,6 +8,9 @@
 #include<QMouseEvent>
 #include"Stone.h"
 #include"chessrule.h"
+#include<vector>
+#include<QPushButton>
+#include<QObject>
 class chess_platform : public QWidget
 {
     Q_OBJECT
@@ -23,9 +26,20 @@ public:
      void CsetY(QPoint* p,int y);
      void CsetX(Stone* p,int x);
      void CsetY(Stone* p,int y);
+     //悔棋
+     void drawBackbuttton();
+public slots:
+     void getBack();
+
+
 public:
      const short Init[32]{1,2,3,4,5,4,3,2,1,6,6,7,7,7,7,7,8,8,8,8,8,9,9,10,11,12,13,14,13,12,11,10};
     std::map<int,Stone> _s;
+
+    std::vector<Stone> _olds;
+    std::vector<int> steps;
+    //当前第几步
+
     int chessBoard[12][11] = {
         {0,0, 0, 0, 0, 0, 0, 0, 0, 0,0},
         {0,1, 2, 3, 4, 5, 6, 7, 8, 9,0},
@@ -46,6 +60,9 @@ public:
     chessRule rule;
     //正在活动的棋子
     Stone *acstone=nullptr;
+
+    QPushButton *btn = new QPushButton;
+
 
 signals:
 

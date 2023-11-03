@@ -128,7 +128,7 @@ bool chessRule::canonRule(QPoint* f,QPoint* s,int map[12][11]){
                     return false;
              }
          }
-    }
+    }else{return false;}
     if(map[s->y()][s->x()]!=0){
          return false;
     }

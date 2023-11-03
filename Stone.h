@@ -15,6 +15,7 @@ public:
     Stone(){}
     Stone(int id,int type,int x,int y);
     ~Stone();
+    Stone(const Stone  &sto);
     int getid();
     void setid(int id);
     int gettype();

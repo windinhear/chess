@@ -5,8 +5,10 @@ using namespace std;
 chess_platform::chess_platform(QWidget *parent):QWidget (parent)
 {
     this->createStones();
+    this->drawBackbuttton();
     this->rule;
 
+    QObject::connect(btn, SIGNAL(clicked()), this, SLOT(getBack()));
     cout<<"初始化棋盘"<<endl;
 
 
@@ -15,6 +17,8 @@ void chess_platform::paintEvent(QPaintEvent *){
      QPainter painter(this);
       drawMap(painter);
        drawStone(painter);
+      drawBackbuttton();
+
 }
 void chess_platform::drawMap(QPainter &painter){
 
@@ -199,6 +203,7 @@ void chess_platform::mouseReleaseEvent(QMouseEvent *ev){
                }
 
               if( !rule.choseRule(acstone,&press,chessBoard))return;
+                _olds.push_back(*acstone);
                 //合法
                chessBoard[acstone->getY()][acstone->getX()]=0;
                chessBoard[press.y()][press.x()]=acstone->getid();
@@ -207,12 +212,15 @@ void chess_platform::mouseReleaseEvent(QMouseEvent *ev){
                acstone->setY(press.y());
 
                if(id!=-1){
+               _olds.push_back(*dd);
                dd->setLive(false);
                dd->setX(-1);
                dd->setY(-1);
-
-
+                steps.push_back(2);
                 }
+               else{
+                    steps.push_back(1);
+               }
                acstone=nullptr;
               dd=nullptr;
      }
@@ -224,6 +232,52 @@ void chess_platform::mouseReleaseEvent(QMouseEvent *ev){
 
 
 }
+void chess_platform::getBack(){
+     if(_olds.empty()) return;
+    cout<<"go back"<<endl;
+    if(steps.back()==2){
+         Stone dd=_olds.back();
+          _olds.pop_back();
+
+          //chessBoard[  _s[dd.getid()-1].getY()][_s[dd.getid()-1].getX()]=0;
+          chessBoard[ dd.getY() ][dd.getX()]=dd.getid();
+
+          _s[dd.getid()-1].setX(dd.getX());
+          _s[dd.getid()-1].setY(dd.getY());
+         _s[dd.getid()-1].setLive(true);
+
+    }
 
 
+    Stone back=_olds.back();
+    _olds.pop_back();
+    if(steps.back()==1)
+        chessBoard[_s[back.getid()-1].getY() ][ _s[back.getid()-1].getX()]=0;
+    _s[back.getid()-1].setX(back.getX());
+    _s[back.getid()-1].setY(back.getY());
+    chessBoard[back.getY() ][ back.getX()]=back.getid();
+    steps.pop_back();
+
+
+    if((IsRed(back.gettype())&&who==1)||(IsBlack(back.gettype())&&who==2)){
+                    acstone->setSelect(false);
+                    if(acstone!=nullptr){
+                        who=(who==2?1:2);
+                         acstone=nullptr;
+                    }
+
+    }
+
+who=(who==2?1:2);
+
+    this->update();
+
+}
+void chess_platform::drawBackbuttton(){
+    btn->setParent(this);
+    btn->setText("悔棋");
+    btn->setGeometry(950,300,100,50);
+       btn->raise();
+       btn->show();
+}
 

@@ -1,5 +1,5 @@
 
-#ifndef CHESSRULE_H
+#ifndef  CHESSRULE_H
 #define CHESSRULE_H
 
 #include "Stone.h"
@@ -31,4 +31,4 @@ public:
      return a<=16;
  }
 };
-
+#endif
