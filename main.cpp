@@ -1,12 +1,23 @@
-
 #include <QApplication>
-#include "chess_platform.h"
-#include<QWidget>
-int main(int argc,char* argv[]){
-       QApplication app(argc,argv);
-       chess_platform w;
-       w.resize(1100,1000);
-       w.show();
-       return app.exec();
-}
+#include "ChooseDlg.h"
+#include "MainWnd.h"
+#include <QTime>
+int main(int argc, char* argv[])
+{
+    QApplication app(argc, argv);
 
+    //QTime t = QTime::currentTime();
+    //qsrand(t.msec()+t.second()*1000);
+
+    ChooseDlg dlg;
+    if(dlg.exec() != QDialog::Accepted)
+        return 0;
+
+    MainWnd wnd(dlg._selected);
+    wnd.show();
+
+
+
+
+    return app.exec();
+}
